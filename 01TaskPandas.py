@@ -3,7 +3,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import pandasgui
 import tables
-
+import regex 
 # Generate Test Data01
 '''
 num_days = 20
@@ -97,8 +97,9 @@ trig_from_hdf = pd.DataFrame(pd.read_hdf("trig.hdf5"))
 #Source: https://www.kaggle.com/tanuprabhu/population-by-country-2020
 
 #Display Data
+
 population_data = pd.DataFrame(pd.read_csv("population_by_country_2019_2020.csv"))
-#pandasgui.show(population_data)
+pandasgui.show(population_data)
 print("Show data in console ")
 print(population_data)
 print("\n Summary: ")
@@ -112,6 +113,23 @@ Population_Change = (population_data.loc[:,"Population (2020)"] - population_dat
 
 population_data["Net population change"] = New_Population_Change
 population_data["Population change [%]"] = Population_Change
+
+#Sorted by Relative value
+
+population_data.sort_values(by=["Population change [%]"], inplace = True, ascending = False)
+#print(population_data)
+
+#Generate a bar chart of the 10 countries that had the highest percentage population growth. Include the populations of 2019 and 2020 on it.
+#Use a regular expression filter to select the columns.
+
+population_data.set_index(population_data["Country (or dependency)"],inplace=True)
+
+population201920_col = population_data.filter(regex=r"Population \(2020\)|Population \(2019\)")
+population201920_col = population201920_col[0:10]
+
+#print(population201920_col)
+population201920_col.plot(kind='bar')
+#plt.show()
 
 
  

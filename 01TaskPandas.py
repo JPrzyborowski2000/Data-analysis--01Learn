@@ -59,8 +59,8 @@ df[0.2:1.0]
 #print(df.loc[(df["A"] > -0.75) & (df["B"] < 0.25), :])
 '''
 
-# Generate Test Data03
-
+# Generate Test Data03 & Save and Read
+'''
 alpha = np.array([0, np.pi/4, np.pi/2, np.pi*3/4, np.pi])
 
 trig = pd.DataFrame({"sinus": np.round(np.sin(alpha), 10),
@@ -91,3 +91,14 @@ print(trig_from_csv)
 #HDF5 format is faster and more complex
 trig.to_hdf("trig.hdf5", "data", format="fixed", mode="w", complevel=5)  
 trig_from_hdf = pd.DataFrame(pd.read_hdf("trig.hdf5"))
+'''
+
+#Task to do with data
+
+population_data = pd.DataFrame(pd.read_csv("population_by_country_2019_2020.csv"))
+#pandasgui.show(population_data)
+print("Show data in console ")
+print(population_data)
+print("\n Summary: ")
+print(population_data.describe())
+

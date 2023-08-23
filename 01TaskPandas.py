@@ -99,11 +99,11 @@ trig_from_hdf = pd.DataFrame(pd.read_hdf("trig.hdf5"))
 #Display Data
 
 population_data = pd.DataFrame(pd.read_csv("population_by_country_2019_2020.csv"))
-pandasgui.show(population_data)
-print("Show data in console ")
-print(population_data)
-print("\n Summary: ")
-print(population_data.describe())
+#pandasgui.show(population_data)
+#print("Show data in console ")
+#print(population_data)
+#print("\n Summary: ")
+#print(population_data.describe())
 
 #Relative and absolute value to population 2020 vs 2019
 
@@ -113,6 +113,7 @@ Population_Change = (population_data.loc[:,"Population (2020)"] - population_dat
 
 population_data["Net population change"] = New_Population_Change
 population_data["Population change [%]"] = Population_Change
+pd_old = population_data
 
 #Sorted by Relative value
 
@@ -131,5 +132,16 @@ population201920_col = population201920_col[0:10]
 population201920_col.plot(kind='bar')
 #plt.show()
 
+#Add new col and write there 'LOW'
+population_data["Density (2020)"] = 'Low'
+#print(population_data)
 
- 
+#Count the population density and, in countries where it exceeds 500 people per km2, 
+#write the word "High" in the Density column
+
+Density2020 = population_data.loc[:,"Population (2020)"]/population_data.loc[:,"Land Area (Km²)"]
+#print(Density2020)
+
+population_data.loc[Density2020>500,"Density (2020)"] = 'High'
+save_data = population_data[::2]
+save_data.to_csv("endTASK.csv")

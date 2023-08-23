@@ -93,8 +93,10 @@ trig.to_hdf("trig.hdf5", "data", format="fixed", mode="w", complevel=5)
 trig_from_hdf = pd.DataFrame(pd.read_hdf("trig.hdf5"))
 '''
 
-#Task to do with data
+#Task to do with new DataSet from
+#Source: https://www.kaggle.com/tanuprabhu/population-by-country-2020
 
+#Display Data
 population_data = pd.DataFrame(pd.read_csv("population_by_country_2019_2020.csv"))
 #pandasgui.show(population_data)
 print("Show data in console ")
@@ -102,3 +104,14 @@ print(population_data)
 print("\n Summary: ")
 print(population_data.describe())
 
+#Relative and absolute value to population 2020 vs 2019
+
+New_Population_Change = population_data.loc[:,"Population (2020)"] - population_data.loc[:,"Population (2019)"]
+
+Population_Change = (population_data.loc[:,"Population (2020)"] - population_data.loc[:,"Population (2019)"])/population_data.loc[:,"Population (2020)"]*100
+
+population_data["Net population change"] = New_Population_Change
+population_data["Population change [%]"] = Population_Change
+
+
+ 
